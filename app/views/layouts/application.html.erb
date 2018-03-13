@@ -9,6 +9,12 @@
   </head>
 
   <body>
+    <h1>ChooseApps</h1>
+    <%= link_to 'Sign in with LinkedIn!', user_linkedin_omniauth_authorize_path %>
+    <% if user_signed_in? %>
+      <%= current_user.name %>
+      <%= current_user.email %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
