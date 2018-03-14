@@ -14,6 +14,12 @@
     <% if user_signed_in? %>
       <%= current_user.name %>
       <%= current_user.email %>
+      <%= button_to 'Log Out', destroy_user_session_url, method: :delete %>
+      <!-- <form class="" action="<%= destroy_user_session_url %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="submit" name="" value="Sign Out">
+      </form> -->
     <% end %>
     <%= yield %>
   </body>
