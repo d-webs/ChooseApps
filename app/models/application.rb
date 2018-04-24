@@ -1,0 +1,3 @@
+class Application < ApplicationRecord
+  has_and_belongs_to_many :industries
+end

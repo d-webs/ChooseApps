@@ -10,10 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313074300) do
+ActiveRecord::Schema.define(version: 20180424073108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.string "name", null: false
+    t.float "price", null: false
+    t.string "url", null: false
+    t.string "parent_company"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bookmarks", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_bookmarks_on_application_id"
+    t.index ["user_id", "application_id"], name: "index_bookmarks_on_user_id_and_application_id", unique: true
+  end
+
+  create_table "categorizations", force: :cascade do |t|
+    t.integer "application_id", null: false
+    t.integer "industry_id", null: false
+    t.index ["application_id"], name: "index_categorizations_on_application_id"
+    t.index ["industry_id", "application_id"], name: "index_categorizations_on_industry_id_and_application_id", unique: true
+  end
+
+  create_table "industries", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.integer "application_id", null: false
+    t.integer "rating", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_reviews_on_application_id"
+    t.index ["user_id", "application_id"], name: "index_reviews_on_user_id_and_application_id", unique: true
+  end
+
+  create_table "screenshots", force: :cascade do |t|
+    t.integer "application_id", null: false
+    t.index ["application_id"], name: "index_screenshots_on_application_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
